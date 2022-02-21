@@ -43,7 +43,7 @@ where
         to += THERSHOLD;
     }
     let mut result = Vec::with_capacity(length);
-    println!("Amount of spawned threads id {}", handlers.len());
+    println!("Amount of spawned threads {}", handlers.len());
     for i in handlers.into_iter() {
         result.append(&mut i.await.unwrap());
     }
@@ -52,9 +52,15 @@ where
 
 #[tokio::main]
 async fn main() {
+    // run main to see amount spawned threads
     let vector: Vec<u8> = vec![2, 2, 2, 4, 4, 4, 3, 3, 3, 3];
-    let result = splitter(vector, sample).await;
-    println!("{:?}", result);
+    splitter(vector, sample).await;
+
+    let vector1: Vec<u8> = vec![2, 2, 2];
+    splitter(vector1, sample).await;
+
+    let vector2: Vec<u8> = vec![2, 2];
+    splitter(vector2, sample).await;
 }
 
 #[cfg(test)]
